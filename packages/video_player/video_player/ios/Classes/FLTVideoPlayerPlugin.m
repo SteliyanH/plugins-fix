@@ -313,7 +313,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
       return;
     }
     // The player may be initialized but still needs to determine the duration.
-    if ([self duration] == 0) {
+    if ([self duration] == 0 && ![self isDurationIndefinate]) {
       return;
     }
 
@@ -325,6 +325,10 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
       @"height" : @(height)
     });
   }
+}
+
+- (bool)isDurationIndefinate {
+    return CMTIME_IS_INDEFINITE([[_player currentItem] duration]);
 }
 
 - (void)play {
