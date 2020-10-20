@@ -517,7 +517,7 @@ class VideoPlayer extends StatefulWidget {
   _VideoPlayerState createState() => _VideoPlayerState();
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
+class _VideoPlayerState extends State<VideoPlayer> with ChangeNotifier {
   _VideoPlayerState() {
     _listener = () {
       final int newTextureId = widget.controller.textureId;
@@ -552,7 +552,9 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void deactivate() {
     super.deactivate();
-    widget.controller.removeListener(_listener);
+    if (widget.controller.hasListeners && _listener != null) {
+      widget.controller.removeListener(_listener);
+    }
   }
 
   @override
